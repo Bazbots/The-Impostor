@@ -83,3 +83,13 @@
 2021-02-09 17:46:19,127:DEBUG:discord.client: Dispatching event socket_raw_receive
 2021-02-09 17:46:19,128:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
 2021-02-09 17:46:19,128:DEBUG:discord.client: Dispatching event socket_response
+2021-02-09 17:47:00,336:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 3.
+2021-02-09 17:47:00,416:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-02-09 17:47:00,416:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-02-09 17:47:00,416:DEBUG:discord.client: Dispatching event socket_response
+2021-02-09 17:47:32,106:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"type":0,"name":"https://impostor.iambaz.repl.co | Run $website to gain a link!","timestamps":{}},"afk":false,"since":0.0,"status":"online"}}" to change status
+2021-02-09 17:47:32,106:DEBUG:discord.client: Dispatching event socket_raw_send
+2021-02-09 17:47:41,590:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 3.
+2021-02-09 17:47:41,637:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-02-09 17:47:41,637:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-02-09 17:47:41,637:DEBUG:discord.client: Dispatching event socket_response
