@@ -7,4 +7,4 @@
 # [You can Invite the bot here!](https://discord.com/api/oauth2/authorize?client_id=759436027529265172&permissions=217579073&redirect_uri=https%3A%2F%2Fdiscord.gg%2FnzsyDWg&scope=bot)
 # [You can also Join our Support Server!](https://discord.gg/Sun4mtFjwE)
 # For more information on The Impostor, go to this website:
-# [https://impostor.iambaz.repl.co](https://impostor.iambaz.repl.co)
+# [https://bazbots.github.io/Impostor-Bot](https://bazbots.github.io/Impostor-Bot)
