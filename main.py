@@ -16,7 +16,7 @@ current_time = now.strftime("%H:%M:%S")
 
 client = discord.Client()
 
-status = cycle(["Among Us on Discord! | Run $help or $commands for help!","https://impostor.iambaz.repl.co | Run $website to gain a link!", "Happy Valentines Day! | Run $help or $commands for help!", "Version 1.2.1!", "Vote for us here at https://top.gg/bot/759436027529265172", "The GitHub Repository - $github for a link!"])
+status = cycle(["Among Us on Discord! | Run $help or $commands for help!","https://bazbots.github.io/Impostor-Bot/ | Run $website to gain a link!", "Happy Valentines Day! | Run $help or $commands for help!", "Version 1.2.2!", "Vote for us here at https://top.gg/bot/759436027529265172", "The GitHub Repository - $github for a link!"])
 
 #f"Among Us in {len(client.guilds)} servers!"
 
@@ -25,14 +25,14 @@ async def change_status():
   await client.change_presence(activity=discord.Game(next(status)))
   print ("Successfully changed status!")
 
-BOTVERSION = "1.2.1"
+BOTVERSION = "1.2.2"
 
 
 @client.event
 async def on_ready():
     print("Loading...")
     time.sleep(3)
-    print('Successfully booted {0.user}\nVersion 1.2.1'.format(client))
+    print('Successfully booted {0.user}\nVersion 1.2.2'.format(client))
     time.sleep(2)
     print("Booted at", current_time)
     time.sleep(2)
@@ -66,11 +66,11 @@ async def on_message(message):
     if message.content.startswith("$commands"):
       await message.channel.send(":robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nprefix\nwebsite\nvote\nservers\ncreator\ngithub\n\n\nSpecial Commands:\nUse the prefix `g$` for these commands\nevent")
     if message.content.startswith("$version") :
-      await message.channel.send(":rocket:Current Version::rocket:\n`1.2.1`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Added a status\n:white_check_mark:Created the $github command\n:white_check_mark:Added the Github Webhook to Support Server\n:white_check_mark:Created a Github Repository\n:white_check_mark:Updated the Impostor Website\n\n:clock3:What is still to come::clock3:\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Nothing!")
+      await message.channel.send(":rocket:Current Version::rocket:\n`1.2.2`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Edited a status\n:white_check_mark:Changed the Website command and address\n:white_check_mark:Updated the Impostor Website\n\n:clock3:What is still to come::clock3:\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Nothing!")
     if message.content.startswith("$prefix"):
       await message.channel.send(":gear:We need a Database to change the prefix, it is something we will work on and will be released in a future update!\nUntil then, use the prefix $ or g$ for special commands!:gear:")
     if message.content.startswith("$website"):
-      await message.channel.send(":desktop:Here is my Website::desktop:\nhttps://impostor.iambaz.repl.co")
+      await message.channel.send(":desktop:Here is my Website::desktop:\nhttps://bazbots.github.io/Impostor-Bot/")
     if message.content.startswith("$vote"):
       await message.channel.send(":arrow_up:The bot is awaiting verification and can been found here::arrow_up:\nhttps://top.gg/bot/759436027529265172")
     if message.content.startswith("$servers"):
