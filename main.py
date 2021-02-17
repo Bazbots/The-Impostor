@@ -32,10 +32,10 @@ client = discord.Client()
 status = cycle([
     "Among Us on Discord! | Run $help or $commands for help!",
     "https://bazbots.github.io/Impostor-Bot/ | Run $website to gain a link!",
-    "Happy Pancake Day! | Run $help or $commands for help!",
-    "Version 1.2.6!",
+    "Happy Mother's Day! | Run $help or $commands for help!",
+    "Version 1.2.8!",
     "Vote for us here at https://top.gg/bot/759436027529265172",
-    "The GitHub Repository | $github for a link!", "In MAXIMUM Servers | Join our Support Server For more Information"])
+    "The GitHub Repository | $github for a link!", "In MAXIMUM Servers | Join our Support Server For more Information", "What do you think? | Run $feedback"])
 
 #f"Among Us in {len(client.guilds)} servers!"
 
@@ -46,14 +46,14 @@ async def change_status():
 	print("Successfully changed status!")
 
 
-BOTVERSION = "1.2.6"
+BOTVERSION = "1.2.8"
 
 
 @client.event
 async def on_ready():
 	print("Loading...")
 	time.sleep(3)
-	print('Successfully booted {0.user}\nVersion 1.2.6'.format(client))
+	print('Successfully booted {0.user}\nVersion 1.2.8'.format(client))
 	time.sleep(2)
 	print("Booted at", current_time)
 	time.sleep(2)
@@ -63,6 +63,14 @@ async def on_ready():
 Gold_Tier = bool
 Diamond_Tier = bool
 Basic_Tier = bool
+
+@client.event
+async def on_guild_join(guild):
+    for channel in guild.text_channels:
+        if channel.permissions_for(guild.me).send_messages:
+            await channel.send("Hi there! I am the Impostor - a bot created by Baz!\n\nYou can join my support server by running $help!\nAlso, you can view all commands by running $commands!\n\nHave fun!")
+        break
+
 
 
 @client.event
@@ -112,9 +120,9 @@ async def on_message(message):
 	if message.content.startswith("$about"):
 		await message.channel.send(":question:A bit about The Impostor:question:\n\n:lock:100% Safe and Secure:lock:\n:england:English:england:\n:white_check_mark:Sus:white_check_mark:\n:spy:Impossible for Data Breaching:spy:")
 	if message.content.startswith("$commands"):
-		await message.channel.send(":robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nwebsite\nvote\nservers\ncreator\ngithub\ntier")
+		await message.channel.send(":robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nfeedback\nwebsite\nvote\nservers\ncreator\ngithub\ntier")
 	if message.content.startswith("$version"):
-		await message.channel.send(":rocket:Current Version::rocket:\n`1.2.6`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Nothing\n\n:clock3:What is still to come::clock3:\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:The upgrade command\n:x:The Prefix command")
+		await message.channel.send(":rocket:Current Version:::\n`1.2.8`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Added a message when the bot joins a server!\n\n:clock3:What is still to come::clock3:\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:The upgrade command\n:x:The Prefix command")
 	if message.content.startswith("$website"):
 		await message.channel.send(":desktop:Here is my Website::desktop:\nhttps://bazbots.github.io/Impostor-Bot/")
 	if message.content.startswith("$vote"):
@@ -127,7 +135,8 @@ async def on_message(message):
 		await message.channel.send(":file_folder:Oke doke!:file_folder:\n:open_file_folder:Here is my GitHub Repo!:open_file_folder:\nhttps://github.com/Bazbots/Impostor-Bot")
 	if message.content.startswith("$tier"):
 		await message.channel.send(":free:You are in `Basic` Tier!:free:\nThis is Tier `1` out of 3!\n:free:Basic:free:\n:coin:Gold:coin:\n:gem:Diamond:gem:\n:question:What you can do at `Basic` Tier::question:\n:white_check_mark:Use all Basic commands (all under basic in $commands)\n:white_check_mark:You have access to certain modes (Standard and Crazy Colours)\n\n:coin:What you get when you reach `Gold` Tier::coin:\n:coin:Access to most modes(To be added soon)\n:coin:Multiplayer Mode\n:coin:A 10% higher chance of being Impostor\n\n:gem:What you get at `Diamond` Tier::gem:\n:gem:Access to all modes, even before they are released!\n:gem:25% higher chance of being Impostor\n:gem:Able to suggest modes for the bot!\n\n\n:crown:Soon, you will be able to unlock the other tiers!\n\nHey, you can unlock these tiers from giveaways on our support server!\nhttps://discord.gg/Sun4mtFjwE")
-
+	if message.content.startswith("$feedback"):
+	  await message.channel.send(":pencil:Please answer this short survey to let us know how you feel about the bot::pencil:\nhttps://docs.google.com/forms/d/e/1FAIpQLSeS_fcVh5_GRBmYCFw5qkxU29lSLU1zsTkioePy7Kp8roTVig/viewform?usp=sf_link")
 
 
 
