@@ -68,7 +68,7 @@ Basic_Tier = bool
 async def on_guild_join(guild):
     for channel in guild.text_channels:
         if channel.permissions_for(guild.me).send_messages:
-            await channel.send("Hi there! I am the Impostor - a bot created by Baz!\n\nYou can join my support server by running $help!\nAlso, you can view all commands by running $commands!\n\nHave fun!")
+            await channel.send(":mailbox:Hi there!:mailbox:\n:exclamation:I am the Impostor - a bot created by Baz!:exclamation:\n\n:incoming_envelope:You can join my support server by running $help!:incoming_envelope:\n:information_source:Also, you can view all commands by running $commands!:information_source:\n\n:partying_face:Have fun!:partying_face:")
         break
 
 
