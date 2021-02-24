@@ -8,3 +8,5 @@
 # [You can also Join our Support Server!](https://discord.gg/Sun4mtFjwE)
 # For more information on The Impostor, go to this website:
 # [https://bazbots.github.io/Impostor-Bot](https://bazbots.github.io/Impostor-Bot)
+# By clicking the image below, you can upvote our bot!
+[![Discord Bots](https://top.gg/api/widget/759436027529265172.svg)](https://top.gg/bot/759436027529265172)
