@@ -3,7 +3,6 @@ import os
 import threading
 from keep_alive import keep_alive
 from discord.ext import commands, tasks
-import logging
 from itertools import cycle
 from datetime import datetime
 import time
@@ -11,27 +10,42 @@ import asyncio
 import dbl
 from discord import utils, Client
 from discord import Member as DiscordMember
-from discord.ext.commands import Bot, Greedy
 from discord.ext.commands import BadArgument, CommandNotFound, MissingRequiredArgument
-from replit import db
-
+from colorama import Fore
+import json
 
 
 now = datetime.now()
 
 current_time = now.strftime("%H:%M:%S")
 
+
+
+
 client = commands.Bot(command_prefix = "$")
 client.remove_command("help")
 
 
 
+@client.event
+async def on_guild_join(guild):
+    print(f"I have joined {guild}")
+    for channel in guild.text_channels:
+        if channel.permissions_for(guild.me).send_messages:
+            await channel.send(":mailbox:Hi there!:mailbox:\n\n:exclamation:I am the Impostor - a bot created by Baz!:exclamation:\n\n:incoming_envelope:You can join my support server by running $help! and you can view all of my commands here as well!:incoming_envelope:\n\n:partying_face:Have fun!:partying_face:")
+        break
+
+
+@client.event
+async def on_guild_remove(guild): 
+    print(f"I have left {guild}")
+
 
 status = cycle([
     "Among Us on Discord! | Run $help or $commands for help!", 
     "https://bazbots.github.io/Impostor-Bot/ | Run $website to gain a link!",
-    "Happy Mother's Day! | Run $help or $commands for help!",
-    "Version 1.3!",
+    "Happy Mother's Day! | Run $help for help!",
+    "Version 1.3.3!",
     "Vote for us here at https://top.gg/bot/759436027529265172",
     "The GitHub Repository | $github for a link!", "In MAXIMUM Servers | Join our Support Server For more Information", "What do you think? | Run $feedback"])
 
@@ -41,19 +55,17 @@ status = cycle([
 @tasks.loop(seconds=600)
 async def change_status():
 	await client.change_presence(activity=discord.Game(next(status)))
-	print("Successfully changed status!")
+	print(Fore.GREEN + "Successfully changed status!")
 
 
-BOTVERSION = "1.3"
+BOTVERSION = "1.3.3"
 
 
 @client.event
 async def on_ready():
-	print("Loading...")
-	time.sleep(3)
-	print('Successfully booted {0.user}\nVersion 1.3'.format(client))
+	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.3'.format(client))
 	time.sleep(2)
-	print("Booted at", current_time)
+	print(Fore.BLUE + "Booted at", current_time)
 	time.sleep(2)
 	change_status.start()
 
@@ -62,12 +74,6 @@ Gold_Tier = bool
 Diamond_Tier = bool
 Basic_Tier = bool
 
-@client.event
-async def on_guild_join(guild):
-    for channel in guild.text_channels:
-        if channel.permissions_for(guild.me).send_messages:
-            await channel.send(":mailbox:Hi there!:mailbox:\n\n:exclamation:I am the Impostor - a bot created by Baz!:exclamation:\n\n:incoming_envelope:You can join my support server by running $help!:incoming_envelope:\n\n:information_source:Also, you can view all commands by running $commands!:information_source:\n\n:partying_face:Have fun!:partying_face:")
-        break
 
 
 
@@ -75,10 +81,9 @@ async def on_guild_join(guild):
 async def on_dbl_vote(data):
 	print(data)
 
-
 @client.command()
 async def help(ctx):
-  await ctx.send("Need help? Join my support server!\nhttps://discord.gg/Sun4mtFjwE\nOr you can run $commands to get help with commands!")
+  await ctx.send("Need help? Join my support server!\nhttps://discord.gg/Sun4mtFjwE\nOr you can view all the current commands below!\n\n\n:robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nfeedback\nwebsite\nvote\nservers\ncreator\ngithub\ntier\nping\nchangeprefix")
 
 @client.command()
 async def invite(ctx):
@@ -88,13 +93,10 @@ async def invite(ctx):
 async def about(ctx):
   await ctx.send(":question:A bit about The Impostor:question:\n\n:lock:100% Safe and Secure:lock:\n:england:English:england:\n:white_check_mark:Sus:white_check_mark:\n:spy:Impossible for Data Breaching:spy:")
 
-@client.command()
-async def commands(ctx):
-  await ctx.send(":robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nfeedback\nwebsite\nvote\nservers\ncreator\ngithub\ntier\nping")
 
 @client.command()
 async def version(ctx):
-  await ctx.send(":rocket:Current Version::rocket:\n`1.3`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Re-writen all triggers to commands\n:white_check_mark:Ping command\n\n:clock3:What is still to come::clock3:\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:All triggers")
+  await ctx.send(":rocket:Current Version::rocket:\n`1.3.3`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Bug fix\n\n:clock3:What is still to come::clock3:\n:clock3:Errors\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Disabled $changeprefix command until further notice")
 
 @client.command()
 async def website(ctx):
@@ -128,6 +130,32 @@ async def feedback(ctx):
 async def ping(ctx):
   await ctx.send("Pong!")
   await ctx.send(f"Your ping is {round(client.latency * 1000)}ms!")
+
+@client.command()
+async def guildlist(ctx):
+  for mem in ctx.guild.members:
+    print(mem)
+    await ctx.send(mem)
+
+"""
+@client.command()
+async def modes(ctx):
+  await ctx.send("Here is a list of current modes")
+
+@client.command()
+async def play(ctx, mode):
+  await ctx.send("This command is currently being worked on!")
+
+@play.error()
+async def mode_error(ctx, error):
+  if isinstance(error, commands.MissingRequiredArgument):
+    await ctx.send(":x:Error::x:\nPlease provide a mode for you to play")
+
+@client.command()
+async def prefix(ctx, prefix):
+  db["server_prefix"] = prefix
+"""
+
 
 
 
