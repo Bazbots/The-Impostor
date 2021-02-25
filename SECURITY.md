@@ -14,8 +14,6 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+
+## If you have a problem, you can go to [this link](https://discord.gg/Sun4mtFjwE) to joni our support server! Once you have verified, go to #tickets and react to the message. A moderator should be able to help resolve your problem.
