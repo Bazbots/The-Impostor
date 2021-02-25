@@ -150,10 +150,6 @@ async def play(ctx, mode):
 async def mode_error(ctx, error):
   if isinstance(error, commands.MissingRequiredArgument):
     await ctx.send(":x:Error::x:\nPlease provide a mode for you to play")
-
-@client.command()
-async def prefix(ctx, prefix):
-  db["server_prefix"] = prefix
 """
 
 
