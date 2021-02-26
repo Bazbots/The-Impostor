@@ -101,7 +101,7 @@ async def about(ctx):
 @client.command()
 async def version(ctx):
 	await ctx.send(
-	    ":rocket:Current Version::rocket:\n`1.3.5`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:$eject command\n\n:clock3:What is still to come::clock3:\n:clock3:Errors\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Disabled $changeprefix command until further notice"
+	    ":rocket:Current Version::rocket:\n`1.3.5`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:$report command\n\n:clock3:What is still to come::clock3:\n:clock3:Errors\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Disabled $changeprefix command until further notice"
 	)
 
 
