@@ -41,7 +41,7 @@ async def on_guild_remove(guild):
 status = cycle([
     "Among Us on Discord! | Run $help or $commands for help!",
     "https://bazbots.github.io/Impostor-Bot/ | Run $website to gain a link!",
-    "Happy Mother's Day! | Run $help for help!", "Version 1.3.4!",
+    "Happy Mother's Day! | Run $help for help!", "Version 1.3.5!",
     "Vote for us here at https://top.gg/bot/759436027529265172",
     "The GitHub Repository | $github for a link!",
     "In MAXIMUM Servers | Join our Support Server For more Information",
@@ -55,12 +55,12 @@ async def change_status():
 	print(Fore.GREEN + "Successfully changed status!")
 
 
-BOTVERSION = "1.3.4"
+BOTVERSION = "1.3.5"
 
 
 @client.event
 async def on_ready():
-	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.3.4'.format(client))
+	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.3.5'.format(client))
 	time.sleep(2)
 	print(Fore.BLUE + "Booted at", current_time)
 	time.sleep(2)
@@ -80,7 +80,7 @@ async def on_dbl_vote(data):
 @client.command()
 async def help(ctx):
 	await ctx.send(
-	    "Need help? Join my support server!\nhttps://discord.gg/Sun4mtFjwE\nOr you can view all the current commands below!\n\n\n:robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nfeedback\nwebsite\nvote\nservers\ncreator\ngithub\ntier\nping\neject {user}"
+	    "Need help? Join my support server!\nhttps://discord.gg/Sun4mtFjwE\nOr you can view all the current commands below!\n\n\n:robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nfeedback\nwebsite\nvote\nservers\ncreator\ngithub\ntier\nping\neject {user}\nreport {your username} {problem}"
 	)
 
 
@@ -101,7 +101,7 @@ async def about(ctx):
 @client.command()
 async def version(ctx):
 	await ctx.send(
-	    ":rocket:Current Version::rocket:\n`1.3.4`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:$eject command\n\n:clock3:What is still to come::clock3:\n:clock3:Errors\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Disabled $changeprefix command until further notice"
+	    ":rocket:Current Version::rocket:\n`1.3.5`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:$eject command\n\n:clock3:What is still to come::clock3:\n:clock3:Errors\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Disabled $changeprefix command until further notice"
 	)
 
 
@@ -161,20 +161,13 @@ async def ping(ctx):
 @client.command()
 async def eject(ctx, name):
   await ctx.send(f". 　　　。　　　　•　 　ﾟ　　。 　　.\n　.　　　 　　.　　　　　。　　 。　. \n.　　 。　　　　　 ඞ 。 . 　　 • 　　　　•\n　ﾟ　　 {name} was not An Impostor.　 。　\n'　　。 . 　•　  1 Impostor remains 　 　　。\n。 . 　　 •　　　.　　　. ,　　　　。 . 　　 •")
-"""
-@client.command()
-async def modes(ctx):
-  await ctx.send("Here is a list of current modes")
 
 @client.command()
-async def play(ctx, mode):
-  await ctx.send("This command is currently being worked on!")
+async def report(ctx, username, problem):
+  print(Fore.GREEN + f"{username} has a problem:\n{problem}")
+  await ctx.send("Done!\nThanks for reporting this issue, we will look into it!")
 
-@play.error()
-async def mode_error(ctx, error):
-  if isinstance(error, commands.MissingRequiredArgument):
-    await ctx.send(":x:Error::x:\nPlease provide a mode for you to play")
-"""
+
 
 keep_alive()
 client.run(os.getenv("TOKEN"))
