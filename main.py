@@ -24,7 +24,8 @@ client.remove_command("help")
 
 @client.event
 async def on_guild_join(guild):
-	print(f"I have joined {guild}")
+	print(Fore.GREEN + f"I have joined {guild}")
+	print(Fore.RESET)
 	for channel in guild.text_channels:
 		if channel.permissions_for(guild.me).send_messages:
 			await channel.send(
@@ -35,13 +36,14 @@ async def on_guild_join(guild):
 
 @client.event
 async def on_guild_remove(guild):
-	print(f"I have left {guild}")
+	print(Fore.GREEN + f"I have left {guild}")
+	print(Fore.RESET)
 
 
 status = cycle([
     "Among Us on Discord! | Run $help or $commands for help!",
     "https://bazbots.github.io/Impostor-Bot/ | Run $website to gain a link!",
-    "Happy Mother's Day! | Run $help for help!", "Version 1.3.5!",
+    "Happy Mother's Day! | Run $help for help!", "Version 1.3.6!",
     "Vote for us here at https://top.gg/bot/759436027529265172",
     "The GitHub Repository | $github for a link!",
     "In MAXIMUM Servers | Join our Support Server For more Information",
@@ -55,12 +57,12 @@ async def change_status():
 	print(Fore.GREEN + "Successfully changed status!")
 
 
-BOTVERSION = "1.3.5"
+BOTVERSION = "1.3.6"
 
 
 @client.event
 async def on_ready():
-	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.3.5'.format(client))
+	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.3.6'.format(client))
 	time.sleep(2)
 	print(Fore.BLUE + "Booted at", current_time)
 	time.sleep(2)
@@ -71,7 +73,16 @@ Basic_Tier = bool
 Gold_Tier = bool
 Diamond_Tier = bool
 
-
+@client.event
+async def on_command_error(ctx, error):
+  if isinstance(error, commands.MissingRequiredArgument):
+    await ctx.send(":x:Error:x:\n:information_source:Missing Required Argument")
+    print(Fore.RED + f"Error: {error}")
+  if isinstance(error, commands.CommandNotFound):
+    await ctx.send(":x:Error:x:\n:information_source:Command Not Found")
+    print(Fore.RED + f"Error: {error}")
+    
+  
 @client.event
 async def on_dbl_vote(data):
 	print(data)
@@ -101,7 +112,7 @@ async def about(ctx):
 @client.command()
 async def version(ctx):
 	await ctx.send(
-	    ":rocket:Current Version::rocket:\n`1.3.5`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:$report command\n\n:clock3:What is still to come::clock3:\n:clock3:Errors\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Disabled $changeprefix command until further notice"
+	    ":rocket:Current Version::rocket:\n`1.3.6`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Missing Argument Error command\n:white_check_mark:Command Not Found\n\n:clock3:What is still to come::clock3:\n:clock3:More Errors\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Disabled $changeprefix command until further notice"
 	)
 
 
@@ -167,7 +178,20 @@ async def report(ctx, username, problem):
   print(Fore.GREEN + f"{username} has a problem:\n{problem}")
   await ctx.send("Done!\nThanks for reporting this issue, we will look into it!")
 
+"""
+@client.command()
+async def modes(ctx):
+  await ctx.send("Here is a list of current modes")
 
+@client.command()
+async def play(ctx, mode):
+  await ctx.send("This command is currently being worked on!")
+
+@play.error()
+async def mode_error(ctx, error):
+  if isinstance(error, commands.MissingRequiredArgument):
+    await ctx.send(":x:Error::x:\nPlease provide a mode for you to play")
+"""
 
 keep_alive()
 client.run(os.getenv("TOKEN"))
