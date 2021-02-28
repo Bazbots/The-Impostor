@@ -1,6 +1,7 @@
 import discord
 import os
 import threading
+import unittest
 from keep_alive import keep_alive
 from discord.ext import commands, tasks
 from itertools import cycle
@@ -16,7 +17,7 @@ from replit import db
 
 now = datetime.now()
 
-current_time = now.strftime("%H:%M:%S")
+boot_time = now.strftime("%H:%M:%S")
 
 client = commands.Bot(command_prefix="$")
 client.remove_command("help")
@@ -43,7 +44,7 @@ async def on_guild_remove(guild):
 status = cycle([
     "Among Us on Discord! | Run $help or $commands for help!",
     "https://bazbots.github.io/Impostor-Bot/ | Run $website to gain a link!",
-    "Happy Mother's Day! | Run $help for help!", "Version 1.3.6!",
+    "Happy Mother's Day! | Run $help for help!", "Version 1.3.7!",
     "Vote for us here at https://top.gg/bot/759436027529265172",
     "The GitHub Repository | $github for a link!",
     "In MAXIMUM Servers | Join our Support Server For more Information",
@@ -57,14 +58,14 @@ async def change_status():
 	print(Fore.GREEN + "Successfully changed status!")
 
 
-BOTVERSION = "1.3.6"
+BOTVERSION = "1.3.7"
 
 
 @client.event
 async def on_ready():
-	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.3.6'.format(client))
+	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.3.7'.format(client))
 	time.sleep(2)
-	print(Fore.BLUE + "Booted at", current_time)
+	print(Fore.BLUE + "Booted at", boot_time)
 	time.sleep(2)
 	change_status.start()
 
@@ -75,12 +76,9 @@ Diamond_Tier = bool
 
 @client.event
 async def on_command_error(ctx, error):
-  if isinstance(error, commands.MissingRequiredArgument):
-    await ctx.send(":x:Error:x:\n:information_source:Missing Required Argument")
-    print(Fore.RED + f"Error: {error}")
   if isinstance(error, commands.CommandNotFound):
     await ctx.send(":x:Error:x:\n:information_source:Command Not Found")
-    print(Fore.RED + f"Error: {error}")
+    print(Fore.GREEN + f"Error: {error}")
     
   
 @client.event
@@ -88,10 +86,11 @@ async def on_dbl_vote(data):
 	print(data)
 
 
+
 @client.command()
 async def help(ctx):
 	await ctx.send(
-	    "Need help? Join my support server!\nhttps://discord.gg/Sun4mtFjwE\nOr you can view all the current commands below!\n\n\n:robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nfeedback\nwebsite\nvote\nservers\ncreator\ngithub\ntier\nping\neject {user}\nreport {your username} {problem}"
+	    "Need help? Join my support server!\nhttps://discord.gg/Sun4mtFjwE\nOr you can view all the current commands below!\n\n\n:robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nfeedback\nwebsite\nvote\nservers\ncreator\ngithub\ntier\nping\neject {user} {role}\nreport {your username} {problem}"
 	)
 
 
@@ -112,7 +111,7 @@ async def about(ctx):
 @client.command()
 async def version(ctx):
 	await ctx.send(
-	    ":rocket:Current Version::rocket:\n`1.3.6`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Missing Argument Error command\n:white_check_mark:Command Not Found\n\n:clock3:What is still to come::clock3:\n:clock3:More Errors\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Disabled $changeprefix command until further notice"
+	    ":rocket:Current Version::rocket:\n`1.3.7`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Updated the $eject and $report command to have errors ($help for more info)\n\n:clock3:What is still to come::clock3:\n:clock3:More Errors\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n:clock3:The return of $changeprefix\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Nothing"
 	)
 
 
@@ -170,28 +169,38 @@ async def ping(ctx):
 	await ctx.send(f"Your ping is {round(client.latency * 1000)}ms!")
 
 @client.command()
-async def eject(ctx, name):
-  await ctx.send(f". 　　　。　　　　•　 　ﾟ　　。 　　.\n　.　　　 　　.　　　　　。　　 。　. \n.　　 。　　　　　 ඞ 。 . 　　 • 　　　　•\n　ﾟ　　 {name} was not An Impostor.　 。　\n'　　。 . 　•　  1 Impostor remains 　 　　。\n。 . 　　 •　　　.　　　. ,　　　　。 . 　　 •")
+async def eject(ctx, name, role):
+  if role == "crew":
+    await ctx.send(f". 　　　。　　　　•　 　ﾟ　　。 　　.\n　.　　　 　　.　　　　　。　　 。　. \n.　　 。　　　　　 ඞ 。 . 　　 • 　　　　•\n　ﾟ　　 {name} was not The Impostor.　 。　\n'　　。 . 　•　  1 Impostor remains 　 　　。\n。 . 　　 •　　　.　　　. ,　　　　。 . 　　 •")
+  else:
+    pass
+  if role == "imp":
+    await ctx.send(f". 　　　。　　　　•　 　ﾟ　　。 　　.\n　.　　　 　　.　　　　　。　　 。　. \n.　　 。　　　　　 ඞ 。 . 　　 • 　　　　•\n　ﾟ　　 {name} was The Impostor.　 。　\n'　　。 . 　•　  0 Impostors remain 　 　　。\n。 . 　　 •　　　.　　　. ,　　　　。 . 　　 •")
+  else:
+    pass
+
+@eject.error
+async def no_role(ctx, error):
+  if isinstance(error, commands.MissingRequiredArgument):
+    await ctx.send(f":x:Error:x:\n:information_source:{error}")
+    print(Fore.GREEN + f"Error: {error}")
+
+  
 
 @client.command()
 async def report(ctx, username, problem):
-  print(Fore.GREEN + f"{username} has a problem:\n{problem}")
+  print(Fore.GREEN + f"{username} has a problem: {problem}")
   await ctx.send("Done!\nThanks for reporting this issue, we will look into it!")
 
-"""
-@client.command()
-async def modes(ctx):
-  await ctx.send("Here is a list of current modes")
-
-@client.command()
-async def play(ctx, mode):
-  await ctx.send("This command is currently being worked on!")
-
-@play.error()
-async def mode_error(ctx, error):
+@report.error
+async def no_prob_or_user(ctx, error):
   if isinstance(error, commands.MissingRequiredArgument):
-    await ctx.send(":x:Error::x:\nPlease provide a mode for you to play")
-"""
+    await ctx.send(f":x:Error:x:\n:information_source:{error}")
+    print(Fore.GREEN + f"Error: {error}")
+
+
+
+
 
 keep_alive()
 client.run(os.getenv("TOKEN"))
