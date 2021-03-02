@@ -44,7 +44,7 @@ async def on_guild_remove(guild):
 status = cycle([
     "Among Us on Discord! | Run $help or $commands for help!",
     "https://bazbots.github.io/Impostor-Bot/ | Run $website to gain a link!",
-    "Happy Mother's Day! | Run $help for help!", "Version 1.3.7!",
+    "Happy Mother's Day! | Run $help for help!", "Version 1.3.8!",
     "Vote for us here at https://top.gg/bot/759436027529265172",
     "The GitHub Repository | $github for a link!",
     "In MAXIMUM Servers | Join our Support Server For more Information",
@@ -58,12 +58,12 @@ async def change_status():
 	print(Fore.GREEN + "Successfully changed status!")
 
 
-BOTVERSION = "1.3.7"
+BOTVERSION = "1.3.9"
 
 
 @client.event
 async def on_ready():
-	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.3.7'.format(client))
+	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.3.9'.format(client))
 	time.sleep(2)
 	print(Fore.BLUE + "Booted at", boot_time)
 	time.sleep(2)
@@ -71,13 +71,14 @@ async def on_ready():
 
 
 Basic_Tier = bool
+Bot_Voter = bool
 Gold_Tier = bool
 Diamond_Tier = bool
 
 @client.event
 async def on_command_error(ctx, error):
   if isinstance(error, commands.CommandNotFound):
-    await ctx.send(":x:Error:x:\n:information_source:Command Not Found")
+    await ctx.send(":x:Error:x:\n:information_source:Command is either in the command vault or does not exist")
     print(Fore.GREEN + f"Error: {error}")
     
   
@@ -90,7 +91,7 @@ async def on_dbl_vote(data):
 @client.command()
 async def help(ctx):
 	await ctx.send(
-	    "Need help? Join my support server!\nhttps://discord.gg/Sun4mtFjwE\nOr you can view all the current commands below!\n\n\n:robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nfeedback\nwebsite\nvote\nservers\ncreator\ngithub\ntier\nping\neject {user} {role}\nreport {your username} {problem}"
+	    "Need help? Join my support server!\nhttps://discord.gg/Sun4mtFjwE\nOr you can view all the current commands below!\n\n\n:robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nfeedback\nwebsite\nvote\nservers\ncreator\ngithub\ntier {current/basic/gold/diamond}\nping\neject {user} {role}\nreport {your username} {problem}\nsus {user}"
 	)
 
 
@@ -111,7 +112,7 @@ async def about(ctx):
 @client.command()
 async def version(ctx):
 	await ctx.send(
-	    ":rocket:Current Version::rocket:\n`1.3.7`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Updated the $eject and $report command to have errors ($help for more info)\n\n:clock3:What is still to come::clock3:\n:clock3:More Errors\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n:clock3:The return of $changeprefix\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Nothing"
+	    ":rocket:Current Version::rocket:\n`1.3.9`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Updated $tier\n:white_check_mark:Added $claim\n\n:clock3:What is still to come::clock3:\n:clock3:More Errors\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n:clock3:The return of $changeprefix\n$play and $modes\n\n:outbox_tray:What we removed::outbox_tray:\n:x:The sus command"
 	)
 
 
@@ -150,10 +151,23 @@ async def github(ctx):
 
 
 @client.command()
-async def tier(ctx):
-	await ctx.send(
-	    ":free:You are in `Basic` Tier!:free:\nThis is Tier `1` out of 3!\n:free:Basic:free:\n:coin:Gold:coin:\n:gem:Diamond:gem:\n:question:What you can do at `Basic` Tier::question:\n:white_check_mark:Use all Basic commands (all under basic in $commands)\n:white_check_mark:You have access to certain modes (Standard and Crazy Colours)\n\n:coin:What you get when you reach `Gold` Tier::coin:\n:coin:Access to most modes(To be added soon)\n:coin:Multiplayer Mode\n:coin:A 10% higher chance of being Impostor\n\n:gem:What you get at `Diamond` Tier::gem:\n:gem:Access to all modes, even before they are released!\n:gem:25% higher chance of being Impostor\n:gem:Able to suggest modes for the bot!\n\n\n:crown:Soon, you will be able to unlock the other tiers!\n\nHey, you can unlock these tiers from giveaways on our support server!\nhttps://discord.gg/Sun4mtFjwE"
-	)
+async def tier(ctx, tier):
+  if tier == "current":
+    await ctx.send(":free:You are in `Basic` Tier!:free:\nThis is Tier `1` out of 3!\n:free:Basic:free:\n:coin:Gold:coin:\n:gem:Diamond:gem:")
+  else:
+    pass
+  if tier == "basic":
+    await ctx.send(":question:What you can do at `Basic` Tier::question:\n:white_check_mark:Use all Basic commands (all under basic in $commands)\n:white_check_mark:You have access to certain modes (Standard and Crazy Colours)")
+  else:
+    pass
+  if tier == "gold":
+    await ctx.send(":coin:What you get when you reach `Gold` Tier::coin:\n:coin:Access to most modes(To be added soon)\n:coin:Multiplayer Mode\n:coin:A 10% higher chance of being Impostor")
+  else:
+    pass
+  if tier == "diamond":
+    await ctx.send(":gem:What you get at `Diamond` Tier::gem:\n:gem:Access to all modes, even before they are released!\n:gem:25% higher chance of being Impostor\n:gem:Able to suggest modes for the bot!")
+  else:
+    pass
 
 
 @client.command()
@@ -165,8 +179,7 @@ async def feedback(ctx):
 
 @client.command()
 async def ping(ctx):
-	await ctx.send("Pong!")
-	await ctx.send(f"Your ping is {round(client.latency * 1000)}ms!")
+	await ctx.send(f"Pong!\nYour ping is {round(client.latency * 1000)}ms!")
 
 @client.command()
 async def eject(ctx, name, role):
@@ -198,6 +211,10 @@ async def no_prob_or_user(ctx, error):
     await ctx.send(f":x:Error:x:\n:information_source:{error}")
     print(Fore.GREEN + f"Error: {error}")
 
+
+@client.command()
+async def claim(ctx):
+  await ctx.send("Soon, you will get voter exclusive perks if you vote for us on top.gg! Run $vote to get the link!")
 
 
 
