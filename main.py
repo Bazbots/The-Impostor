@@ -24,6 +24,8 @@ client = commands.Bot(command_prefix="$")
 client.remove_command("help")
 
 
+
+
 @client.event
 async def on_guild_join(guild):
 	print(Fore.GREEN + f"I have joined {guild}")
@@ -45,7 +47,7 @@ async def on_guild_remove(guild):
 status = cycle([
     "Among Us on Discord! | Run $help or $commands for help!",
     "https://bazbots.github.io/Impostor-Bot/ | Run $website to gain a link!",
-    "Happy Mother's Day! | Run $help for help!", "Version 1.3.9!",
+    "Happy Mother's Day! | Run $help for help!", "Version 1.4.1!",
     "Vote for us here at https://top.gg/bot/759436027529265172",
     "The GitHub Repository | $github for a link!",
     "In MAXIMUM Servers | Join our Support Server For more Information",
@@ -59,22 +61,13 @@ async def change_status():
 	print(Fore.GREEN + "Successfully changed status!")
 
 
-BOTVERSION = "1.3.9"
-
 
 @client.event
 async def on_ready():
-	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.3.9'.format(client))
-	time.sleep(2)
-	print(Fore.BLUE + "Booted at", boot_time)
-	time.sleep(2)
+	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.1'.format(client))
+	print("Booted at", boot_time)
 	change_status.start()
 
-
-Basic_Tier = bool
-Bot_Voter = bool
-Gold_Tier = bool
-Diamond_Tier = bool
 
 @client.command()
 async def servers(ctx):
