@@ -22,7 +22,7 @@ client = commands.Bot(command_prefix="$")
 client.remove_command("help")
 
 
-
+version = "1.4.3"
 
 @client.event
 async def on_guild_join(guild):
@@ -30,9 +30,7 @@ async def on_guild_join(guild):
 	print(Fore.RESET)
 	for channel in guild.text_channels:
 		if channel.permissions_for(guild.me).send_messages:
-			await channel.send(
-			    ":mailbox:Hi there!:mailbox:\n\n:exclamation:I am the Impostor - a bot created by Baz!:exclamation:\n\n:incoming_envelope:You can join my support server by running $help! and you can view all of my commands here as well!:incoming_envelope:\n\n:partying_face:Have fun!:partying_face:"
-			)
+			await channel.send(f":mailbox:Hi there!:mailbox:\n\n:exclamation:I am the Impostor - a bot created by Baz!:exclamation:\n\n:incoming_envelope:You can join my support server by running $help! and you can view all of my commands here as well!:incoming_envelope:\n\n:partying_face:Have fun!:partying_face:\n\n\n:information_source:When you added this bot, it was in version {version}")
 		break
 
 
@@ -46,7 +44,7 @@ status = cycle([
     "Among Us on Discord! | Run $help or $commands for help!",
     "https://bazbots.github.io/Impostor-Bot/ | Run $website to gain a link!",
     "Happy Mother's Day!",
-    "Version 1.4.2!",
+    "Version 1.4.3!",
     "Vote for the bot here at https://top.gg/bot/759436027529265172",
     "The GitHub Repository | $github for a link!",
     "In MAXIMUM Servers | Join our Support Server For more Information",
@@ -63,7 +61,7 @@ async def change_status():
 
 @client.event
 async def on_ready():
-	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.2'.format(client))
+	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.3'.format(client))
 	print("Booted at", boot_time)
 	change_status.start()
 
