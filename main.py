@@ -6,12 +6,10 @@ from keep_alive import keep_alive
 from discord.ext import commands, tasks
 from itertools import cycle
 from datetime import datetime
-import time
 import asyncio
 import dbl
 from discord import utils, Client
 from discord import Member as DiscordMember
-from discord.ext.commands import BadArgument, CommandNotFound, MissingRequiredArgument
 from colorama import Fore
 from replit import db
 
@@ -47,11 +45,12 @@ async def on_guild_remove(guild):
 status = cycle([
     "Among Us on Discord! | Run $help or $commands for help!",
     "https://bazbots.github.io/Impostor-Bot/ | Run $website to gain a link!",
-    "Happy Mother's Day! | Run $help for help!", "Version 1.4.1!",
-    "Vote for us here at https://top.gg/bot/759436027529265172",
+    "Happy Mother's Day!",
+    "Version 1.4.2!",
+    "Vote for the bot here at https://top.gg/bot/759436027529265172",
     "The GitHub Repository | $github for a link!",
     "In MAXIMUM Servers | Join our Support Server For more Information",
-    "What do you think? | Run $feedback"
+    "What do you think? | Run $feedback", "$help, $invite"
 ])
 
 
@@ -64,7 +63,7 @@ async def change_status():
 
 @client.event
 async def on_ready():
-	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.1'.format(client))
+	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.2'.format(client))
 	print("Booted at", boot_time)
 	change_status.start()
 
