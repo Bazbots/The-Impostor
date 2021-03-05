@@ -27,7 +27,7 @@ class Basic(commands.Cog):
   
   @commands.command()
   async def version(self, ctx):
-	  await ctx.send(":rocket:Current Version::rocket:\n`1.4.2`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Nothing\n\n:clock3:What is still to come::clock3:\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n:clock3:The return of $changeprefix\n$play and $modes\n\n:outbox_tray:What we removed::outbox_tray:\n:x:$crash")
+	  await ctx.send(":rocket:Current Version::rocket:\n`1.4.3`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:$kill (Thanks <@513283671353196585> for the suggestion)\n\n:clock3:What is still to come::clock3:\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n:clock3:The return of $changeprefix\n$play and $modes\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Nothing")
   
   @commands.command()
   async def website(self, ctx):
@@ -55,6 +55,8 @@ class Basic(commands.Cog):
     if isinstance(error, commands.MissingRequiredArgument):
       await ctx.send(f":x:Error:x:\n:information_source:{error}")
       print(Fore.GREEN + f"Error: {error}")
+
+  
 
 
 
