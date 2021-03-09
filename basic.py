@@ -20,11 +20,11 @@ class Basic(commands.Cog):
 
   @commands.command()
   async def help(self, ctx):
-	  await ctx.send("Need help? Join my support server!\nhttps://discord.gg/Sun4mtFjwE\nOr you can view all the current commands below!\n\n\n:robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nfeedback\nwebsite\nvote\nservers\ncreator\ngithub\ntier {current/basic/gold/diamond}\nping\neject {user} {role}\nsus\n$kill {username}")
+	  await ctx.send("Need help? Join my support server!\nhttps://discord.gg/Sun4mtFjwE\nOr you can view all the current commands below!\n\n\n:robot:Current Commands::robot:\nUse prefix `$`\nhelp\nabout\ninvite\nversion\nfeedback\nwebsite\nvote\nservers\ncreator\ngithub\ntier {current/basic/gold/diamond}\nping\neject {user} {role}\nsus\nkill {username}")
 
   @commands.command()
   async def invite(self, ctx):
-	  await ctx.send(":incoming_envelope:Invite me here!:incoming_envelope:\n https://discord.com/api/oauth2/authorize?client_id=759436027529265172&permissions=3423071425&redirect_uri=https%3A%2F%2Fbazbots.github.io%2FImpostor-Bot&scope=bot")
+	  await ctx.send(":incoming_envelope:Invite me here!:incoming_envelope:\n https://discord.com/api/oauth2/authorize?client_id=759436027529265172&permissions=8&redirect_uri=https%3A%2F%2Fbazbots.github.io%2FImpostor-Bot&response_type=code&scope=identify%20email%20bot")
       
   @commands.command()
   async def about(self, ctx):
@@ -32,7 +32,7 @@ class Basic(commands.Cog):
   
   @commands.command()
   async def version(self, ctx):
-	  await ctx.send(":rocket:Current Version::rocket:\n`1.4.4`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Creator Exclusive commands\n\n:clock3:What is still to come::clock3:\n:clock3:Solo Mode Among Us\n:clock3:Fixing the guild status issue\n$play and $modes\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Nothing")
+	  await ctx.send(":rocket:Current Version::rocket:\n`1.4.5`\n\n\n:inbox_tray:What's new to this update::inbox_tray:\n:white_check_mark:Updated the invite command\n:clock3:Added more deaths\n\n:clock3:What is still to come::clock3:\n:clock3:Fixing the guild status issue\n\n:outbox_tray:What we removed::outbox_tray:\n:x:Nothing")
   
   @commands.command()
   async def website(self, ctx):
@@ -57,4 +57,3 @@ class Basic(commands.Cog):
 
 def setup(client):
   client.add_cog(Basic(client))
-  print(Fore.GREEN + "Basic Cog added!")
