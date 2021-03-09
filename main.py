@@ -25,7 +25,7 @@ client = commands.Bot(command_prefix="$")
 client.remove_command("help")
 
 
-version = "1.4.4"
+version = "1.4.5"
 
 @client.event
 async def on_guild_join(guild):
@@ -65,7 +65,7 @@ async def change_status():
 
 @client.event
 async def on_ready():
-	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.4'.format(client))
+	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.5'.format(client))
 	print("Booted at", boot_time)
 	change_status.start()
 
