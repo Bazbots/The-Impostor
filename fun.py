@@ -3,7 +3,7 @@ from discord.ext import commands
 from colorama import Fore
 import random
 
-deaths = ["brutally murdered them", "ejected them into space", "no scoped them for a 180 headshot", "oofing them", "tripping them over and them making them fall into some conveniently placed lava", "snapped their neck!\nOuch!", "repeatedly stabbed them in the back", "hacked all of their `vbucks`"]
+deaths = ["brutally murdered them", "ejected them into space", "no scoped them for a 180 headshot", "oofed them", "tripping them over and them making them fall into some conveniently placed lava", "`demonitised` them... I'm talking to <@744610714316046387> to!", "repeatedly stabbed them in the back", "hacked all of their `vbucks`", "summoned the enderdragon", "made people think that Innersloth added the airship map (still not here yet)"]
 
 class Fun(commands.Cog):
 
