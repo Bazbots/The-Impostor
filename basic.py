@@ -2,7 +2,6 @@ import discord
 from discord.ext import commands
 from colorama import Fore
 from datetime import datetime
-import json
 
 now = datetime.now()
 
