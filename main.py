@@ -15,7 +15,9 @@ from discord import utils, Client
 from discord import Member as DiscordMember
 from colorama import Fore
 from replit import db
+import random
 
+sponsors = ["\n\nHey! You can join Fritzwinger's discord server here!\nhttps://discord.gg/wYC6dtUM5J", "", "", "", ""]
 
 now = datetime.now()
 
@@ -25,7 +27,7 @@ client = commands.Bot(command_prefix="$")
 client.remove_command("help")
 
 
-version = "1.4.6"
+version = "1.4.7"
 
 @client.event
 async def on_guild_join(guild):
@@ -45,14 +47,12 @@ async def on_guild_remove(guild):
 
 
 status = cycle([
-    "Among Us on Discord! | Run $help or $commands for help!",
-    "https://bazbots.github.io/Impostor-Bot/ | Run $website to gain a link!",
+    "Among Us on Discord! | $help",
+    "https://bazbots.github.io/Impostor-Bot/ | $website",
     "Happy Mother's Day!",
-    "Version 1.4.6!",
-    "Vote for the bot here at https://top.gg/bot/759436027529265172",
-    "The GitHub Repository | $github for a link!",
-    "In MAXIMUM Servers | Join our Support Server For more Information",
-    "What do you think? | Run $feedback", "$help, $invite"
+    f"Version {version} | $version",
+    "Vote for the bot here at https://top.gg/bot/759436027529265172 | $vote",
+    "The GitHub Repository | $github", "What do you think? | $feedback", "$help, $invite", "$host to start a game!"
 ])
 
 
@@ -65,18 +65,18 @@ async def change_status():
 
 @client.event
 async def on_ready():
-	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.6'.format(client))
+	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.7'.format(client))
 	print("Booted at", boot_time)
 	change_status.start()
 
 
 @client.command()
 async def servers(ctx):
-	await ctx.send(f"Currently playing Among Us in **{len(client.guilds)}** servers!")
+	await ctx.send(f"Currently playing Among Us in **{len(client.guilds)}** servers!{random.choice(sponsors)}")
 
 @client.command()
 async def ping(ctx):
-	await ctx.send(f"Pong!\nYour ping is {round(client.latency * 1000)}ms!")
+	await ctx.send(f"Pong!\nYour ping is {round(client.latency * 1000)}ms!{random.choice(sponsors)}")
 
 @client.command()
 async def load(ctx, extension):
@@ -108,11 +108,13 @@ async def host(ctx):
   global leader
   if leader == None:
       leader = ctx.author
-      await ctx.send(f"```[!] Host connected: {ctx.author.name}```")
+      await ctx.send(f"```[!] Host connected: {ctx.author.name}\nRun $host again to disconnect```")
+      print(f"[!] {leader} is hosting a game")
   elif leader != None and leader != ctx.author:
       await ctx.send(f"```[!] {leader} is already hosting, they can disconnect by typing $host again```")
   else:
-      await ctx.send(f"```[!] Host has disconnected: {ctx.author.name}```")
+      await ctx.send(f"```[!] Host has disconnected: {ctx.author.name}\nSomeone else can become a host by typing $host```")
+      print(f"[!] {leader} is no longer hosting a game")
       leader = None
 
 @client.command()
@@ -122,7 +124,7 @@ async def users(ctx):
   if leader == None:
       await ctx.send("[!] There is currently no host, use $host to host a game")
   else:
-      string = f"[!] Current connected users: \n{leader}\n"
+      string = f"[!] Host: {leader}\nCurrent connected users: \n"
 
       for member in list(client.get_channel(leader.voice.channel.id).members):
           string = string + f"- {member}\n"
