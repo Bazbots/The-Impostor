@@ -1,5 +1,5 @@
 """
-Copyright (c) Baz 2021 Impostor Bot - Among Us Bot for Discord
+Copyright (c) Baz 2021 The Impostor - Among Us Bot for Discord
 """
 import discord
 import os
@@ -17,7 +17,9 @@ from colorama import Fore
 from replit import db
 import random
 
-sponsors = ["\n\nHey! You can join Fritzwinger's discord server here!\nhttps://discord.gg/wYC6dtUM5J", "", "", "", ""]
+sponsors = ["\n\nHey! You can join Fritzwinger's discord server here!\nhttps://discord.gg/wYC6dtUM5J", "\n\nHey! You can join Baz's discord server here!\nhttps://discord.gg/5jKA9kj", "\n\nHey! You should check out Milxq ok's channel!\nhttps://www.youtube.com/channel/UCA65XYkOjhXc1G3pko2bpbw", "", "", "", "", "", "", "", ""]
+
+sponsor_owners = ["Fritzwinger", "Milxq ok", "Camila"]
 
 now = datetime.now()
 
@@ -26,8 +28,7 @@ boot_time = now.strftime("%H:%M:%S")
 client = commands.Bot(command_prefix="$")
 client.remove_command("help")
 
-
-version = "1.4.7"
+__version__ = "1.4.8"
 
 @client.event
 async def on_guild_join(guild):
@@ -35,7 +36,7 @@ async def on_guild_join(guild):
 	print(Fore.RESET)
 	for channel in guild.text_channels:
 		if channel.permissions_for(guild.me).send_messages:
-			await channel.send(f":mailbox:Hi there!:mailbox:\n\n:exclamation:I am the Impostor - a bot created by Baz!:exclamation:\n\n:incoming_envelope:You can join my support server by running $help! and you can view all of my commands here as well!:incoming_envelope:\n\n:partying_face:Have fun!:partying_face:\n\n\n:information_source:When you added this bot, it was in version {version}:information_source:")
+			await channel.send(f":mailbox:Hi there!:mailbox:\n\n:exclamation:I am the Impostor - a bot created by Baz!:exclamation:\n\n:incoming_envelope:You can join my support server by running $help! and you can view all of my commands here as well!:incoming_envelope:\n\n:partying_face:Have fun!:partying_face:\n\n\n:information_source:When you added this bot, it was in version {__version__}:information_source:")
 		break
 
 
@@ -47,14 +48,12 @@ async def on_guild_remove(guild):
 
 
 status = cycle([
-    "Among Us on Discord! | $help",
+    "Among Us on Discord! | $help, $host",
     "https://bazbots.github.io/Impostor-Bot/ | $website",
     "Happy Mother's Day!",
-    f"Version {version} | $version",
+    f"Version {__version__} | $version",
     "Vote for the bot here at https://top.gg/bot/759436027529265172 | $vote",
-    "The GitHub Repository | $github", "What do you think? | $feedback", "$help, $invite", "$host to start a game!"
-])
-
+    "The GitHub Repository | $github", "What do you think? | $feedback", "$help, $invite", "$host to start a game!", f"With {random.choice(sponsor_owners)}! You can be a sponsor by running $sponsors"])
 
 @tasks.loop(seconds=600)
 async def change_status():
@@ -65,7 +64,7 @@ async def change_status():
 
 @client.event
 async def on_ready():
-	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.7'.format(client))
+	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.8'.format(client))
 	print("Booted at", boot_time)
 	change_status.start()
 
@@ -152,8 +151,21 @@ async def mute(ctx):
           else:
               await member.edit(mute = True)
 
-  except AttributeError as e:
+  except AttributeError as lol:
       print("[!] A host must first connect by using the $host command")
+
+@client.command()
+async def start(ctx):
+  global leader
+  try:
+      if ctx.author != leader:
+          await ctx.send("```[!] Only the host can use this command```")
+      elif leader == None:
+        await ctx.send(f"[!] {ctx.author.mention} there is currently no host\nType $host to become a host.")
+      else:
+        await ctx.send("[!] \@everyone Game is starting!")
+  except:
+    pass
 
 @client.command()
 async def unmute(ctx):
