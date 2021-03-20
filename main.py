@@ -1,5 +1,5 @@
 """
-Copyright (c) Baz 2021 The Impostor - Among Us Bot for Discord
+Copyright © Baz 2021 The Impostor - Among Us Bot for Discord
 """
 import discord
 import os
@@ -16,6 +16,7 @@ from discord import Member as DiscordMember
 from colorama import Fore
 from replit import db
 import random
+import json
 
 sponsors = ["\n\nHey! You can join Fritzwinger's discord server here!\nhttps://discord.gg/wYC6dtUM5J", "\n\nHey! You can join Baz's discord server here!\nhttps://discord.gg/5jKA9kj", "\n\nHey! You should check out Milxq ok's channel!\nhttps://www.youtube.com/channel/UCA65XYkOjhXc1G3pko2bpbw", "", "", "", "", "", "", "", ""]
 
@@ -28,7 +29,7 @@ boot_time = now.strftime("%H:%M:%S")
 client = commands.Bot(command_prefix="$")
 client.remove_command("help")
 
-__version__ = "1.4.8"
+__version__ = "1.5.0"
 
 @client.event
 async def on_guild_join(guild):
@@ -46,11 +47,10 @@ async def on_guild_remove(guild):
 	print(Fore.RESET)
 
 
-
 status = cycle([
     "Among Us on Discord! | $help, $host",
     "https://bazbots.github.io/Impostor-Bot/ | $website",
-    "Happy Mother's Day!",
+    "Happy Easter!",
     f"Version {__version__} | $version",
     "Vote for the bot here at https://top.gg/bot/759436027529265172 | $vote",
     "The GitHub Repository | $github", "What do you think? | $feedback", "$help, $invite", "$host to start a game!", f"With {random.choice(sponsor_owners)}! You can be a sponsor by running $sponsors"])
@@ -61,10 +61,9 @@ async def change_status():
 	print(Fore.GREEN + "Successfully changed status!")
 
 
-
 @client.event
 async def on_ready():
-	print(Fore.BLUE + 'Successfully booted {0.user}\nVersion 1.4.8'.format(client))
+	print(Fore.BLUE + f'Successfully booted {client.user}\nVersion {__version__}')
 	print("Booted at", boot_time)
 	change_status.start()
 
@@ -88,167 +87,6 @@ async def unload(ctx, extension):
 for filename in os.listdir("./cogs"):
   if filename.endswith(".py"):
     client.load_extension(f"cogs.{filename[:-3]}")
-
-global ghostmode_on
-ghostmode_on = False
-
-global dead_members
-dead_members = []
-
-global in_discussion
-in_discussion = False
-
-global leader
-leader = None
-
-
-@client.command()
-async def host(ctx):
-  global leader
-  if leader == None:
-      leader = ctx.author
-      await ctx.send(f"```[!] Host connected: {ctx.author.name}\nRun $host again to disconnect```")
-      print(f"[!] {leader} is hosting a game")
-  elif leader != None and leader != ctx.author:
-      await ctx.send(f"```[!] {leader} is already hosting, they can disconnect by typing $host again```")
-  else:
-      await ctx.send(f"```[!] Host has disconnected: {ctx.author.name}\nSomeone else can become a host by typing $host```")
-      print(f"[!] {leader} is no longer hosting a game")
-      leader = None
-
-@client.command()
-async def users(ctx):
-  global leader
-
-  if leader == None:
-      await ctx.send("[!] There is currently no host, use $host to host a game")
-  else:
-      string = f"[!] Host: {leader}\nCurrent connected users: \n"
-
-      for member in list(client.get_channel(leader.voice.channel.id).members):
-          string = string + f"- {member}\n"
-
-      await ctx.send(f"```{string}```")
-
-@client.command()
-async def mute(ctx):
-  global leader
-  global ghostmode_on
-
-  global in_discussion
-  in_discussion = False
-  try:
-      if ctx.author != leader:
-          await ctx.send("```[!] Only the host can use this command```")
-  except: pass
-
-  try:
-      for member in list(client.get_channel(leader.voice.channel.id).members):
-          if member.id in dead_members and ghostmode_on:
-              await member.edit(mute = False)
-          elif member.id not in dead_members and ghostmode_on:
-              await member.edit(deafen = True, mute = True)
-          else:
-              await member.edit(mute = True)
-
-  except AttributeError as lol:
-      print("[!] A host must first connect by using the $host command")
-
-@client.command()
-async def start(ctx):
-  global leader
-  try:
-      if ctx.author != leader:
-          await ctx.send("```[!] Only the host can use this command```")
-      elif leader == None:
-        await ctx.send(f"[!] {ctx.author.mention} there is currently no host\nType $host to become a host.")
-      else:
-        await ctx.send("[!] \@everyone Game is starting!")
-  except:
-    pass
-
-@client.command()
-async def unmute(ctx):
-  global leader
-  global dead_members
-  global ghostmode_on
-  global in_discussion
-  in_discussion = True
-  try:
-      if ctx.author != leader:
-          await ctx.send("```[!] Only the host can use this command```")
-  except: pass
-
-  try:
-      for member in list(client.get_channel(leader.voice.channel.id).members):
-          if member.id in dead_members and ghostmode_on:
-              await member.edit(mute = True)
-          elif member.id in dead_members and ghostmode_on == False:
-              await member.edit(mute = True)
-          elif member.id not in dead_members and ghostmode_on:
-              await member.edit(deafen = False, mute = False)
-          else:
-              await member.edit(mute = False)
-
-  except AttributeError:
-      print("[!] There is no host found, connect using $host")
-
-
-@client.command()
-async def dead(ctx):
-  global dead_members
-  global ghostmode_on
-
-  if ghostmode_on:
-      await ctx.author.edit(mute = False, deafen = False)
-  else:
-      await ctx.author.edit(mute = True)
-
-  if ctx.author.id not in dead_members:
-      dead_members.append(ctx.author.id)
-
-@client.command()
-async def game_mute(ctx, *members: discord.Member):
-    global dead_members
-    global ghostmode_on
-    global leader
-
-    for member in members:
-        if member not in list(client.get_channel(leader.voice.channel.id).members):
-            await ctx.send(f"[!] {member} is not in game")
-            continue
-        try:
-            if ghostmode_on and in_discussion:
-                await member.edit(mute = True)
-                valid = True
-            if ghostmode_on and in_discussion == False:
-                await member.edit(mute = False, deafen = False)
-                valid = True
-            else:
-                await member.edit(mute = True)
-                valid = True
-        except Exception as e:
-            print(e)
-            await ctx.send(f"[!] Invalid user: {member}")
-            valid = False
-
-        if valid:
-            if member.id not in dead_members:
-                dead_members.append(member.id)
-        print(dead_members)
-
-async def ghostmode(ctx):
-    global ghostmode_on
-
-    if ctx.author != leader:
-        await ctx.send("```[!] Only the host can use this command```")
-    else:
-        if ghostmode_on == False:
-            ghostmode_on = True
-            await ctx.send("```[!] You have entered ghostmode```")
-        else:
-            ghostmode_on = False
-            await ctx.send("```[!] You are no longer in ghostmode```")
 
 
 
