@@ -1,13 +1,14 @@
 from flask import Flask
 from threading import Thread
-app = Flask("")
+
+app = Flask("The Impostor")
 
 @app.route("/")
 def home():
-  return "Hello I am alive!"
+  return "When the Impostor is sus"
 def run():
   app.run(host="0.0.0.0",port=8080)
 
 def keep_alive():
-  t = Thread(target=run)
-  t.start()
+  server = Thread(target=run)
+  server.start()
