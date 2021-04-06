@@ -16,28 +16,38 @@ from discord import Member as DiscordMember
 from colorama import Fore
 from replit import db
 import random
-import json
-
-sponsors = ["\n\nHey! You can join Fritzwinger's discord server here!\nhttps://discord.gg/wYC6dtUM5J", "\n\nHey! You can join Baz's discord server here!\nhttps://discord.gg/5jKA9kj", "\n\nHey! You should check out Milxq ok's channel!\nhttps://www.youtube.com/channel/UCA65XYkOjhXc1G3pko2bpbw", "", "", "", "", "", "", "", ""]
-
-sponsor_owners = ["Fritzwinger", "Milxq ok", "Camila"]
 
 now = datetime.now()
 
 boot_time = now.strftime("%H:%M:%S")
 
-client = commands.Bot(command_prefix="$")
+client = commands.Bot(
+    command_prefix=["$", "<@759436027529265172> ", "<@759436027529265172>"])
 client.remove_command("help")
 
-__version__ = "1.5.0"
+__version__ = "1.5.5"
+
 
 @client.event
 async def on_guild_join(guild):
-	print(Fore.GREEN + f"I have joined {guild}")
-	print(Fore.RESET)
+	with open('impostor_thumbnail.png', 'r') as f:
+		picture = discord.File(f)
+	print(Fore.GREEN + f"I have joined {guild}" + Fore.RESET)
 	for channel in guild.text_channels:
 		if channel.permissions_for(guild.me).send_messages:
-			await channel.send(f":mailbox:Hi there!:mailbox:\n\n:exclamation:I am the Impostor - a bot created by Baz!:exclamation:\n\n:incoming_envelope:You can join my support server by running $help! and you can view all of my commands here as well!:incoming_envelope:\n\n:partying_face:Have fun!:partying_face:\n\n\n:information_source:When you added this bot, it was in version {__version__}:information_source:")
+			embedHi = discord.Embed(
+			    title=":mailbox:Hi there!:mailbox:",
+			    description=
+			    f"<:impostor:774673531786625024>I am the Impostor - a bot created by Baz!<:impostor:774673531786625024>\n\n:incoming_envelope:You can join my support server by running $help and you can view all of my commands here as well!:incoming_envelope:\n\n:partying_face:Have fun!:partying_face:\n\n\n:information_source:When you added this bot, it was in version {__version__}:information_source:",
+			    colour=discord.Colour.red())
+			embedHi.set_thumbnail(
+			    url=
+			    "https://cdn1.iconfinder.com/data/icons/logos-brands-in-colors/231/among-us-player-red-512.png"
+			)
+			embedHi.set_footer(
+			    text="© Baz - The Impostor - Among Us bot for Discord")
+			await channel.send(embed=embedHi)
+			await channel.send(file=picture)
 		break
 
 
@@ -48,12 +58,14 @@ async def on_guild_remove(guild):
 
 
 status = cycle([
-    "Among Us on Discord! | $help, $host",
-    "https://bazbots.github.io/Impostor-Bot/ | $website",
-    "Happy Easter!",
+    "Among Us on Discord! | $help, $info",
+    "https://bazbots.github.io/The-Impostor | $info", "Happy Easter!",
     f"Version {__version__} | $version",
-    "Vote for the bot here at https://top.gg/bot/759436027529265172 | $vote",
-    "The GitHub Repository | $github", "What do you think? | $feedback", "$help, $invite", "$host to start a game!", f"With {random.choice(sponsor_owners)}! You can be a sponsor by running $sponsors"])
+    "Vote for the bot here at https://top.gg/bot/759436027529265172 | $info",
+    "The GitHub Repository | $info", "What do you think? | $feedback",
+    "$help, $info", "Use the prefix $ or @The Impostor"
+])
+
 
 @tasks.loop(seconds=600)
 async def change_status():
@@ -63,32 +75,46 @@ async def change_status():
 
 @client.event
 async def on_ready():
-	print(Fore.BLUE + f'Successfully booted {client.user}\nVersion {__version__}')
-	print("Booted at", boot_time)
+	print(Fore.BLUE +
+	      f'Successful login to {client.user}\nVersion {__version__}')
+	print("Remember to add one hour to this:\nStarted at", boot_time)
 	change_status.start()
 
 
 @client.command()
 async def servers(ctx):
-	await ctx.send(f"Currently playing Among Us in **{len(client.guilds)}** servers!{random.choice(sponsors)}")
+	embedSeven = discord.Embed(
+	    title="Current Servers",
+	    description=
+	    f"Currently playing Among Us in **{len(client.guilds)}** servers!",
+	    colour=discord.Colour.red())
+	embedSeven.set_thumbnail(
+	    url=
+	    "https://cdn1.iconfinder.com/data/icons/logos-brands-in-colors/231/among-us-player-red-512.png"
+	)
+	embedSeven.set_footer(
+	    text="© Baz - The Impostor - Among Us bot for Discord")
+	await ctx.send(embed=embedSeven)
+
 
 @client.command()
 async def ping(ctx):
-	await ctx.send(f"Pong!\nYour ping is {round(client.latency * 1000)}ms!{random.choice(sponsors)}")
+	await ctx.send(f"Pong!\nYour ping is {round(client.latency * 1000)}!")
+
 
 @client.command()
 async def load(ctx, extension):
-  client.load_extension(f"cogs.{extension}")
+	client.load_extension(f"cogs.{extension}")
+
 
 @client.command()
 async def unload(ctx, extension):
-  client.unload_extension(f"cogs.{extension}")
+	client.unload_extension(f"cogs.{extension}")
+
 
 for filename in os.listdir("./cogs"):
-  if filename.endswith(".py"):
-    client.load_extension(f"cogs.{filename[:-3]}")
-
-
+	if filename.endswith(".py"):
+		client.load_extension(f"cogs.{filename[:-3]}")
 
 keep_alive()
 client.run(os.getenv("TOKEN"))
