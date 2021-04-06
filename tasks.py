@@ -13,7 +13,7 @@ class Tasks(commands.Cog):
 
   @commands.command()
   async def scan(self, ctx):
-    await ctx.send("Beginning scan...")
+    scanning = await ctx.send("Beginning scan...")
     await asyncio.sleep(2)
     await ctx.send(f"ID: {ctx.author}")
     await asyncio.sleep(2)
@@ -27,7 +27,7 @@ class Tasks(commands.Cog):
 
   @commands.command()
   async def download(self, ctx):
-    download_data = await ctx.send("Downloading Data\n")
+    download_data = await ctx.send("Beginning Download\n")
     await asyncio.sleep(1)
     await download_data.edit(content="Downloading Data.\n█")
     await asyncio.sleep(1)
@@ -64,7 +64,7 @@ class Tasks(commands.Cog):
   
   @commands.command()
   async def inspect(self, ctx):
-    inspection = await ctx.send("Beginning Inspection\n")
+    inspection = await ctx.send("Beginning Sample Inspection\n")
     timer = 60
     await asyncio.sleep(1)
     await inspection.edit(content=f"Inspecting\nTime Remaining: {timer}\n█")
@@ -112,7 +112,7 @@ class Tasks(commands.Cog):
     await inspection.edit(content="Task Complete!")
 
   @commands.command()
-  async def weatherdownload(self, ctx):
+  async def weather(self, ctx):
     weather_bar = await ctx.send("Beginning Download")
     await asyncio.sleep(1)
     await weather_bar.edit(content="Downloading.\n█\n\n")
