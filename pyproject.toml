@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "discord-bot"
-version = "1.3.4"
-description = "This is a discord bot (the impostor)"
+name = "The-Impostor"
+version = "1.5.5"
+description = "This is the code for a discord bot (The Impostor)"
 authors = ["Baz"]
 
 [tool.poetry.dependencies]
@@ -11,6 +11,7 @@ flask = "^1.1.2"
 replit = "^2.0.0"
 dblpy = "^0.4.0"
 colorama = "^0.4.4"
+youtube-dl = "^2021.3.25"
 
 [tool.poetry.dev-dependencies]
 
