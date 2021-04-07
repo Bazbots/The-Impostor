@@ -133,6 +133,37 @@ class Tasks(commands.Cog):
     await asyncio.sleep(1)
     await weather_bar.edit(content="Task Complete!")
 
+
+  @commands.command()
+  async def reboot(self, ctx, action):
+    countdownr = 90
+    if action.lower() == "start":
+      rebooting = await ctx.send(f"Rebooting Wifi...\nPlease try again in {countdownr} seconds")
+      for i in range(1, 91):
+        await rebooting.edit(content=f"Rebooting Wifi...\nPlease try again in {countdownr} seconds")
+        countdownr = countdownr - 1
+        await asyncio.sleep(1)
+      await asyncio.sleep(2)
+      await rebooting.edit(content="Reboot complete!\nAll systems are back online!")
+    else:
+      await ctx.send("Next time say `$reboot start`")
+    
+
+  @reboot.error
+  async def reb_error(self, ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+      embedNine=discord.Embed(
+      title="Wifi Pannel",
+      colour=discord.Colour.green()
+      )
+      embedNine.add_field(name="Connection:", value=":x:", inline=True)
+      embedNine.add_field(name="Back up Power:", value=":x:", inline=True)
+      embedNine.add_field(name="Internal Server:", value=":x:", inline=True)
+      embedNine.add_field(name="External Server", value=":x:", inline=True)
+      embedNine.add_field(name="Summary:", value="Reboot Required", inline=True)
+      embedNine.add_field(name="What to do:",value="Run `$reboot start` to start the reboot", inline=True)
+      embedNine.set_footer(text="© Baz - The Impostor - Among Us bot for Discord")
+      await ctx.send(embed=embedNine)
      
     
     
