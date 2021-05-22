@@ -33,15 +33,18 @@
   <h2>Current commands:</h2>
   <h2>Use the prefix "$" or "@The Impostor"</h2>
   <h2>You can also use $help for help</h2>
-  <a href="#">test</a>
-  <div class="place-image"><img src="impostor_thumbnail.png"></div>
-  <script>$('a').hover(
-function() {
-    $('.place-image').fadeIn('slow');
-},function() {
-    $('.place-image').fadeOut('slow');
+<style>
+.hide {
+  display: none;
 }
-    );</script>
+    
+.Hover_over:hover + .hide {
+  display: block;
+  color: red;
+}
+</style>
+<div class="Hover_over">Hover over me.</div>
+<div class="hide"><img src="impostor_thumbnail.png"></div>
   <h3>info - sends some useful links for the bot</h3>
   <h3>patreon - get access to the patreon page!</h3>
   <h3>vote - vote for the bot!</h3>
