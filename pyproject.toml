@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "The-Impostor"
-version = "1.5.5"
+version = "1.9.5"
 description = "This is the code for a discord bot (The Impostor)"
 authors = ["Baz"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-discord = "^1.0.1"
-flask = "^1.1.2"
+discord = "1.7.3"
+flask = "^2.3.2"
 replit = "^2.0.0"
 dblpy = "^0.4.0"
 colorama = "^0.4.4"
